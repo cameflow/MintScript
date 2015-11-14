@@ -1,3 +1,54 @@
 #!/bin/bash
 # Created by Yocoyani Hernandez and Alejandro Terrazas
 # Script for Linux Mint
+
+# añadir paquetes que faltan:
+apt-get install -y libreoffice
+apt-get install -y g++
+apt-get install -y cmake
+apt-get install -y cmake-curses-gui
+apt-get install -y k3b
+apt-get install -y xfce4-xkb-plugin
+apt-get install -y octave
+apt-get install -y scilab
+apt-get install -y scilab-plotlib
+
+## Instalar chrome
+## Bajarlo de https://www.google.com/intl/en/chrome/browser/
+apt-get install -y libcurl3
+wget --no-check-certificate https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+dpkg -i google-chrome-stable_current_amd64.deb
+rm google-chrome-stable_current_amd64.deb
+dpkg -i google-chrome-stable_current_amd64.deb
+rm google-chrome-stable_current_amd64.deb
+
+
+#quitar paquetes inseguros o que no se usan
+apt-get remove -y ftp
+dpkg -r telnet
+dpkg -P telnet
+dpkg -r smbclient
+dpkg -r transmission-gtk
+dpkg -r transmission-common
+dpkg -P transmission-gtk
+dpkg -r network-manager-pptp-gnome network-manager-pptp pptp-linux
+dpkg -P pptp-linux network-manager-pptp
+dpkg -r pppoeconf pppconfig
+dpkg -P pppoeconf
+dpkg -r rsync
+dpkg -P rsync
+dpkg -r bluez-cups
+dpkg -r bluez-alsa
+dpkg -r hplip
+dpkg -P hplip
+dpkg -r hplip-data
+dpkg -r printer-driver-pxljr
+dpkg -r printer-driver-foo2zjs
+dpkg -r printer-driver-foo2zjs-common
+dpkg -r pidgin-libnotify
+dpkg -r pidgin
+dpkg -P pidgin
+dpkg -r pidgin-data
+dpkg -P pidgin-data
+dpkg -r vino
+dpkg -P vino
