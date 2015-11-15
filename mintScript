@@ -12,6 +12,10 @@ apt-get install -y xfce4-xkb-plugin
 apt-get install -y octave
 apt-get install -y scilab
 apt-get install -y scilab-plotlib
+apt-get install -y nmap
+apt-get install -y vlc
+apt-get install -y apache2
+apt-get install -y mysql-server
 
 ## Instalar chrome
 ## Bajarlo de https://www.google.com/intl/en/chrome/browser/
@@ -23,7 +27,8 @@ dpkg -i google-chrome-stable_current_amd64.deb
 rm google-chrome-stable_current_amd64.deb
 
 
-#quitar paquetes inseguros o que no se usan
+# Quitar paquetes inseguros o que no se usan
+# Faltan los paquetes que tiene dependencias
 apt-get remove -y ftp
 dpkg -r telnet
 dpkg -P telnet
@@ -37,6 +42,9 @@ dpkg -r pppoeconf pppconfig
 dpkg -P pppoeconf
 dpkg -r rsync
 dpkg -P rsync
+dpkg -r cinnamon-bluetooth
+dpkg -r gnome-user-share
+dpkg -r gnome-bluetooth
 dpkg -r bluez-cups
 dpkg -r bluez-alsa
 dpkg -r hplip
@@ -52,3 +60,15 @@ dpkg -r pidgin-data
 dpkg -P pidgin-data
 dpkg -r vino
 dpkg -P vino
+
+# Cerrar Servicios
+service avahi-daemon stop
+service cups-browsed stop
+service cups stop
+service smbd stop
+service nmbd stop
+echo manual | tee avahi-daemon.override
+echo manual | tee cups-browsed.override
+echo manual | tee cups.override
+echo manual | tee smbd.override
+echo manual | tee nmbd.override
