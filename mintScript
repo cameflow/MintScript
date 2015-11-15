@@ -140,6 +140,7 @@ ls -1 /home > users
 # export LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib:/usr/local/cuda/lib64/:/lib32:/usr/lib32
 
 #Variables de ambiente de usuarios
+echo "" >> /etc/bash.bashrc
 echo "export JAVA_HOME=/usr/java/default" >> /etc/bash.bashrc
 echo "export ANDROID=/home/$LINE/Development/adt-bundle-linux-x86_64-20140702" >> /etc/bash.bashrc
 echo "export PATH=\$JAVA_HOME/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:\$ANDROID/eclipse:\$ANDROID/sdk/platform-tools" >> /etc/bash.bashrc
