@@ -103,4 +103,4 @@ apt-get install -y apache2
 #- - - - -instalar mySQL- - - - -
 #esto se deberia dejar al final porque pide asignar una contraseña
 #root para la base de datos
-apt-get install -y mysql-server
+apt-get install -y mysql-server 
