@@ -86,11 +86,11 @@ service cups-browsed stop
 service cups stop
 service smbd stop
 service nmbd stop
-echo manual | tee avahi-daemon.override
-echo manual | tee cups-browsed.override
-echo manual | tee cups.override
-echo manual | tee smbd.override
-echo manual | tee nmbd.override
+echo manual | tee /etc/init/avahi-daemon.override
+echo manual | tee /etc/init/cups-browsed.override
+echo manual | tee /etc/init/cups.override
+echo manual | tee /etc/init/smbd.override
+echo manual | tee /etc/init/nmbd.override
 
 # - - - - -  Instalar varios juegos - - - - -
 apt-get install -y gnuchess
