@@ -11,6 +11,10 @@ dpkg -i libssl1.0.0_1.0.1k-3+deb8u1_amd64.deb openssl_1.0.1k-3+deb8u1_amd64.deb
 rm libssl1.0.0_1.0.1k-3+deb8u1_amd64.deb openssl_1.0.1k-3+deb8u1_amd64.deb
 apt-get -f install
 
+# - - - - -  Quitar cuenta insegura de guest - - - - -
+echo "[SeatDefaults]" >> /usr/share/lightdm/lightdm.conf.d/50-no-guest.conf
+echo "allow-guest=false" >> /usr/share/lightdm/lightdm.conf.d/50-no-guest.conf
+
 #- - - - -instalar varios programas- - - - -
 apt-get install -y libreoffice
 apt-get install -y g++
@@ -104,7 +108,7 @@ echo "deployment.system.config=file\:/etc/.java/deployment/deployment.properties
 echo "deployment.security.level=MEDIUM" >> /etc/.java/deployment/deployment.properties
 cd
 
-source $HOME/.bashrc
+source /etc/.bashrc
 java -version
 javac -version
 
@@ -117,22 +121,8 @@ ls -1 /home > users
 # export LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib:/usr/local/cuda/lib64/:/lib32:/usr/lib32
 
 #Variables de ambiente de usuarios
-cat users | while read LINE
-do
-  if [ -s /home/$LINE/.bashrc ]
-  then
-    echo "export JAVA_HOME=/usr/java/default" >> /home/$LINE/.bashrc
-    echo "export JAVA_HOME=/usr/java/default" >> /root/.bashrc
-    echo "export ANDROID=/home/$LINE/Development/adt-bundle-linux-x86_64-20140702" >> /home/$LINE/.bashrc
-    echo "export ANDROID=/home/$LINE/Development/adt-bundle-linux-x86_64-20140702" >> /root/.bashrc
-    if [ $1 -eq 1 ] # Si CUDA
-    then
-      echo "export PATH=\$JAVA_HOME/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/usr/local/cuda/bin:\$ANDROID/eclipse:\$ANDROID/sdk/platform-tools" >> /home/$LINE/.bashrc
-      echo "export LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib:/usr/local/cuda/lib64:/lib32:/usr/lib32" >> /home/$LINE/.bashrc
-    else
-      echo "export PATH=\$JAVA_HOME/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:\$ANDROID/eclipse:\$ANDROID/sdk/platform-tools" >> /home/$LINE/.bashrc
-      echo "export LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib:/lib32:/usr/lib32" >> /home/$LINE/.bashrc
-   fi
-    echo "export CLASSPATH=\$JAVA_HOME/jre/lib/rt.jar:." >> /home/$LINE/.bashrc
-  fi
-done
+echo "export JAVA_HOME=/usr/java/default" >> /etc/bash.bashrc
+echo "export ANDROID=/home/$LINE/Development/adt-bundle-linux-x86_64-20140702" >> /etc/bash.bashrc
+echo "export PATH=\$JAVA_HOME/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:\$ANDROID/eclipse:\$ANDROID/sdk/platform-tools" >> /etc/bash.bashrc
+echo "export LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib:/lib32:/usr/lib32" >> /etc/bash.bashrc
+echo "export CLASSPATH=\$JAVA_HOME/jre/lib/rt.jar:." >> /root/.bashrc
