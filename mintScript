@@ -147,8 +147,6 @@ echo "export LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib:/lib32:/usr/lib32" >> 
 echo "export CLASSPATH=\$JAVA_HOME/jre/lib/rt.jar:." >> /root/.bashrc
 
 
-
-
 # - - - - -  Quitar módulos del kernel - - - - -
 rmmod joydev
 rmmod lp
