@@ -12,8 +12,8 @@ rm libssl1.0.0_1.0.1k-3+deb8u1_amd64.deb openssl_1.0.1k-3+deb8u1_amd64.deb
 apt-get -f install
 
 # - - - - -  Quitar cuenta insegura de guest - - - - -
-echo "[SeatDefaults]" >> /usr/share/lightdm/lightdm.conf.d/50-no-guest.conf
-echo "allow-guest=false" >> /usr/share/lightdm/lightdm.conf.d/50-no-guest.conf
+#echo "[SeatDefaults]" >> /usr/share/lightdm/lightdm.conf.d/50-no-guest.conf
+#echo "allow-guest=false" >> /usr/share/lightdm/lightdm.conf.d/50-no-guest.conf
 
 #- - - - -instalar varios programas- - - - -
 apt-get install -y libreoffice
@@ -92,6 +92,25 @@ echo manual | tee cups.override
 echo manual | tee smbd.override
 echo manual | tee nmbd.override
 
+# - - - - -  Instalar varios juegos - - - - -
+apt-get install -y gnuchess
+apt-get install -y xboard
+apt-get install -y scid
+apt-get install -y scid-rating-data
+apt-get install -y chessx
+apt-get install -y stockfish
+# - - - - -  Instalar STEAM - - - - -
+wget media.steampowered.com/client/installer/steam.deb
+apt-get install -y curl
+dpkg -i steam.deb
+rm steam.deb
+
+# - - - - -  para OpenGL y CUDA - - - - -
+#apt-get install -y freeglut3
+#apt-get install -y freeglut3-dev
+#apt-get install -y libglew-dev
+
+
 # - - - - -  Instalar Java - - - - -
 wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u45-b14/jdk-8u45-linux-x64.tar.gz
 mkdir /usr/java
@@ -121,13 +140,12 @@ ls -1 /home > users
 # export LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib:/usr/local/cuda/lib64/:/lib32:/usr/lib32
 
 #Variables de ambiente de usuarios
+echo "" >> /etc/bash.bashrc
 echo "export JAVA_HOME=/usr/java/default" >> /etc/bash.bashrc
 echo "export ANDROID=/home/$LINE/Development/adt-bundle-linux-x86_64-20140702" >> /etc/bash.bashrc
 echo "export PATH=\$JAVA_HOME/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:\$ANDROID/eclipse:\$ANDROID/sdk/platform-tools" >> /etc/bash.bashrc
 echo "export LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib:/lib32:/usr/lib32" >> /etc/bash.bashrc
 echo "export CLASSPATH=\$JAVA_HOME/jre/lib/rt.jar:." >> /root/.bashrc
-
-
 
 
 # - - - - -  Quitar módulos del kernel - - - - -
