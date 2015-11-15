@@ -2,7 +2,16 @@
 # Created by Yocoyani Hernandez and Alejandro Terrazas
 # Script for Linux Mint
 
-# añadir paquetes que faltan:
+#- - - - -reemplaza la version vulnerable de openssl que trae Mint 
+#y la sustituye por la version ‘k’ de openssl y libssl- - - - -
+dpkg --purge --force-depends libssl1.0.0:i386
+wget http://ftp.debian.org/debian/pool/main/o/openssl/libssl1.0.0_1.0.1k-3+deb8u1_amd64.deb
+wget http://ftp.debian.org/debian/pool/main/o/openssl/openssl_1.0.1k-3+deb8u1_amd64.deb
+dpkg -i libssl1.0.0_1.0.1k-3+deb8u1_amd64.deb openssl_1.0.1k-3+deb8u1_amd64.deb
+rm libssl1.0.0_1.0.1k-3+deb8u1_amd64.deb openssl_1.0.1k-3+deb8u1_amd64.deb
+apt-get -f install
+
+#- - - - -instalar varios programas- - - - -
 apt-get install -y libreoffice
 apt-get install -y g++
 apt-get install -y cmake
@@ -13,17 +22,14 @@ apt-get install -y octave
 apt-get install -y scilab
 apt-get install -y scilab-plotlib
 
-## Instalar chrome
-## Bajarlo de https://www.google.com/intl/en/chrome/browser/
+#- - - - -instalar chrome- - - - -
 apt-get install -y libcurl3
 wget --no-check-certificate https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 dpkg -i google-chrome-stable_current_amd64.deb
 rm google-chrome-stable_current_amd64.deb
-dpkg -i google-chrome-stable_current_amd64.deb
-rm google-chrome-stable_current_amd64.deb
 
 
-#quitar paquetes inseguros o que no se usan
+#- - - - -quitar paquetes inseguros o que no se usan- - - - -
 apt-get remove -y ftp
 dpkg -r telnet
 dpkg -P telnet
@@ -31,7 +37,7 @@ dpkg -r smbclient
 dpkg -r transmission-gtk
 dpkg -r transmission-common
 dpkg -P transmission-gtk
-dpkg -r network-manager-pptp-gnome network-manager-pptp pptp-linux
+dpkg -r network-manager-pptp-gnome network-manager-pptp pptp-linux 
 dpkg -P pptp-linux network-manager-pptp
 dpkg -r pppoeconf pppconfig
 dpkg -P pppoeconf
@@ -39,16 +45,62 @@ dpkg -r rsync
 dpkg -P rsync
 dpkg -r bluez-cups
 dpkg -r bluez-alsa
+dpkg -r printer-driver-postscript-hp
 dpkg -r hplip
 dpkg -P hplip
 dpkg -r hplip-data
+dpkg -r printer-driver-hpcups
 dpkg -r printer-driver-pxljr
 dpkg -r printer-driver-foo2zjs
 dpkg -r printer-driver-foo2zjs-common
 dpkg -r pidgin-libnotify
-dpkg -r pidgin
-dpkg -P pidgin
 dpkg -r pidgin-data
 dpkg -P pidgin-data
+dpkg -r pidgin
+dpkg -P pidgin
+dpkg -r rdate
 dpkg -r vino
 dpkg -P vino
+#estos tienen problemas de dependencias
+#dpkg -r samba-common 
+#	Dependencias samba-common-bin
+#			nemo-share
+#			samba
+#dpkg -r samba-common-bin
+#dpkg -P samba-common
+#dpkg -r ppp    
+#		Dependencias	pppoe
+#dpkg -P ppp
+#dpkg -r bluez
+#	Dependencias gnome-bluetooth
+#			bluez-alsa:i386
+#			bluetooth
+#			bluez-gstreamer
+#dpkg -P bluez
+
+#- - - - -aqui va el output de todos los dpkg -l- - - - -
+
+#- - - - -cerrar servicios- - - - -
+apt-get install -y nmap
+service avahi-daemon stop
+service cups-browsed stop
+service cups stop
+service smbd stop
+service nmbd stop
+#reemplazo de systemctl
+echo manual | tee avahi-daemon.override
+echo manual | tee cups-browsed.override
+echo manual | tee cups.override
+echo manual | tee smbd.override
+echo manual | tee nmbd.override
+
+#- - - - -instalar VLC- - - - -
+apt-get install -y vlc
+
+#- - - - -instalar apache2- - - - -
+apt-get install -y apache2
+
+#- - - - -instalar mySQL- - - - -
+#esto se deberia dejar al final porque pide asignar una contraseña
+#root para la base de datos
+apt-get install -y mysql-server
