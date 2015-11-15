@@ -26,6 +26,10 @@ apt-get install -y vlc
 apt-get install -y apache2
 apt-get install -y mysql-server
 apt-get install -y default-jdk
+apt-get install -y vim
+add-apt-repository ppa:kirillshkrogalev/ffmpeg-next
+apt-get update
+apt-get install -y ffmpeg
 
 #- - - - -instalar chrome- - - - -
 apt-get install -y libcurl3
@@ -83,6 +87,26 @@ echo manual | tee cups-browsed.override
 echo manual | tee cups.override
 echo manual | tee smbd.override
 echo manual | tee nmbd.override
+
+# - - - - -  Instalar Java - - - - -
+wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u45-b14/jdk-8u45-linux-x64.tar.gz
+mkdir /usr/java
+mv jdk-8u45-linux-x64.tar.gz /usr/java
+cd /usr/java
+tar zxvf jdk-8u45-linux-x64.tar.gz
+ln -s jdk1.8.0_45 latest
+ln -s latest default
+ln -s /usr/java/default/jre/lib/amd64/libnpjp2.so /usr/lib/mozilla/plugins/libnpjp2.so
+mkdir /etc/.java
+mkdir /etc/.java/deployment
+echo "deployment.system.config.mandatory=TRUE" >> /etc/.java/deployment/deployment.config
+echo "deployment.system.config=file\:/etc/.java/deployment/deployment.properties" >> /etc/.java/deployment/deployment.config
+echo "deployment.security.level=MEDIUM" >> /etc/.java/deployment/deployment.properties
+cd
+
+source $HOME/.bashrc
+java -version
+javac -version
 
 
 # - - - - - cambiar variables de ambiente de Java - - -
