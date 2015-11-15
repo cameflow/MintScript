@@ -126,3 +126,12 @@ echo "export ANDROID=/home/$LINE/Development/adt-bundle-linux-x86_64-20140702" >
 echo "export PATH=\$JAVA_HOME/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:\$ANDROID/eclipse:\$ANDROID/sdk/platform-tools" >> /etc/bash.bashrc
 echo "export LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib:/lib32:/usr/lib32" >> /etc/bash.bashrc
 echo "export CLASSPATH=\$JAVA_HOME/jre/lib/rt.jar:." >> /root/.bashrc
+
+
+
+
+# - - - - -  Quitar módulos del kernel - - - - -
+rmmod joydev
+rmmod lp
+echo "blacklist joydev" >> /etc/modprobe.d/blacklist.conf
+echo "blacklist lp" >> /etc/modprobe.d/blacklist.conf
