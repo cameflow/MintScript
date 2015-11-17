@@ -61,12 +61,6 @@ dpkg -r gnome-user-share
 dpkg -r gnome-bluetooth
 dpkg -r bluez-cups
 dpkg -r bluez-alsa
-dpkg -r ia32-libs
-dpkg -r bluez-alsa:i386
-dpkg -r bluetooth
-dpkg -r bluez-gstreamer
-dpkg -r bluez
-dpkg -P bluez
 dpkg -r printer-driver-postscript-hp
 dpkg -r hplip
 dpkg -P hplip
