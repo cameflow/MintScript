@@ -1,0 +1,155 @@
+#!/bin/bash
+# Created by Yocoyani Hernandez and Alejandro Terrazas
+# Script for Linux Mint
+
+#- - - - -reemplaza la version vulnerable de openssl que trae Mint
+#y la sustituye por la version ‘k’ de openssl y libssl- - - - -
+dpkg --purge --force-depends libssl1.0.0:i386
+wget http://ftp.debian.org/debian/pool/main/o/openssl/libssl1.0.0_1.0.1k-3+deb8u1_amd64.deb
+wget http://ftp.debian.org/debian/pool/main/o/openssl/openssl_1.0.1k-3+deb8u1_amd64.deb
+dpkg -i libssl1.0.0_1.0.1k-3+deb8u1_amd64.deb openssl_1.0.1k-3+deb8u1_amd64.deb
+rm libssl1.0.0_1.0.1k-3+deb8u1_amd64.deb openssl_1.0.1k-3+deb8u1_amd64.deb
+apt-get -f install
+
+# - - - - -  Quitar cuenta insegura de guest - - - - -
+#echo "[SeatDefaults]" >> /usr/share/lightdm/lightdm.conf.d/50-no-guest.conf
+#echo "allow-guest=false" >> /usr/share/lightdm/lightdm.conf.d/50-no-guest.conf
+
+#- - - - -instalar varios programas- - - - -
+apt-get install -y libreoffice
+apt-get install -y g++
+apt-get install -y cmake
+apt-get install -y cmake-curses-gui
+apt-get install -y k3b
+apt-get install -y xfce4-xkb-plugin
+apt-get install -y octave
+apt-get install -y scilab
+apt-get install -y scilab-plotlib
+apt-get install -y nmap
+apt-get install -y vlc
+apt-get install -y apache2
+apt-get install -y mysql-server
+apt-get install -y default-jdk
+apt-get install -y vim
+add-apt-repository ppa:kirillshkrogalev/ffmpeg-next
+apt-get update
+apt-get install -y ffmpeg
+
+#- - - - -instalar chrome- - - - -
+apt-get install -y libcurl3
+wget --no-check-certificate https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+dpkg -i google-chrome-stable_current_amd64.deb
+rm google-chrome-stable_current_amd64.deb
+
+
+#- - - - -quitar paquetes inseguros o que no se usan- - - - -
+apt-get remove -y ftp
+dpkg -r telnet
+dpkg -P telnet
+dpkg -r smbclient
+dpkg -r transmission-gtk
+dpkg -r transmission-common
+dpkg -P transmission-gtk
+dpkg -r network-manager-pptp-gnome network-manager-pptp pptp-linux
+dpkg -P pptp-linux network-manager-pptp
+dpkg -r pppoeconf pppconfig
+dpkg -P pppoeconf
+dpkg -r rsync
+dpkg -P rsync
+dpkg -r cinnamon-bluetooth
+dpkg -r gnome-user-share
+dpkg -r gnome-bluetooth
+dpkg -r bluez-cups
+dpkg -r bluez-alsa
+dpkg -r printer-driver-postscript-hp
+dpkg -r hplip
+dpkg -P hplip
+dpkg -r hplip-data
+dpkg -r printer-driver-hpcups
+dpkg -r printer-driver-pxljr
+dpkg -r printer-driver-foo2zjs
+dpkg -r printer-driver-foo2zjs-common
+dpkg -r pidgin-libnotify
+dpkg -r pidgin-data
+dpkg -P pidgin-data
+dpkg -r pidgin
+dpkg -P pidgin
+dpkg -r rdate
+dpkg -r vino
+dpkg -P vino
+
+
+#- - - - -cerrar servicios- - - - -
+apt-get install -y nmap
+service avahi-daemon stop
+service cups-browsed stop
+service cups stop
+service smbd stop
+service nmbd stop
+echo manual | tee /etc/init/avahi-daemon.override
+echo manual | tee /etc/init/cups-browsed.override
+echo manual | tee /etc/init/cups.override
+echo manual | tee /etc/init/smbd.override
+echo manual | tee /etc/init/nmbd.override
+
+# - - - - -  Instalar varios juegos - - - - -
+apt-get install -y gnuchess
+apt-get install -y xboard
+apt-get install -y scid
+apt-get install -y scid-rating-data
+apt-get install -y chessx
+apt-get install -y stockfish
+# - - - - -  Instalar STEAM - - - - -
+wget media.steampowered.com/client/installer/steam.deb
+apt-get install -y curl
+dpkg -i steam.deb
+rm steam.deb
+
+# - - - - -  para OpenGL y CUDA - - - - -
+#apt-get install -y freeglut3
+#apt-get install -y freeglut3-dev
+#apt-get install -y libglew-dev
+
+
+# - - - - -  Instalar Java - - - - -
+wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u45-b14/jdk-8u45-linux-x64.tar.gz
+mkdir /usr/java
+mv jdk-8u45-linux-x64.tar.gz /usr/java
+cd /usr/java
+tar zxvf jdk-8u45-linux-x64.tar.gz
+ln -s jdk1.8.0_45 latest
+ln -s latest default
+ln -s /usr/java/default/jre/lib/amd64/libnpjp2.so /usr/lib/mozilla/plugins/libnpjp2.so
+mkdir /etc/.java
+mkdir /etc/.java/deployment
+echo "deployment.system.config.mandatory=TRUE" >> /etc/.java/deployment/deployment.config
+echo "deployment.system.config=file\:/etc/.java/deployment/deployment.properties" >> /etc/.java/deployment/deployment.config
+echo "deployment.security.level=MEDIUM" >> /etc/.java/deployment/deployment.properties
+cd
+
+source /etc/.bashrc
+java -version
+javac -version
+
+
+# - - - - - cambiar variables de ambiente de Java - - -
+ls -1 /home > users
+
+# cambiar variables de ambiente a:
+# export PATH=$JAVA_HOME/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/usr/local/cuda/bin
+# export LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib:/usr/local/cuda/lib64/:/lib32:/usr/lib32
+
+#Variables de ambiente de usuarios
+echo "" >> /etc/bash.bashrc
+echo "export JAVA_HOME=/usr/java/default" >> /etc/bash.bashrc
+echo "export ANDROID=/home/$LINE/Development/adt-bundle-linux-x86_64-20140702" >> /etc/bash.bashrc
+echo "export PATH=\$JAVA_HOME/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:\$ANDROID/eclipse:\$ANDROID/sdk/platform-tools" >> /etc/bash.bashrc
+echo "export LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib:/lib32:/usr/lib32" >> /etc/bash.bashrc
+echo "export CLASSPATH=\$JAVA_HOME/jre/lib/rt.jar:." >> /root/.bashrc
+
+
+# - - - - -  Quitar módulos del kernel - - - - -
+rmmod joydev
+rmmod lp
+echo "blacklist joydev" >> /etc/modprobe.d/blacklist.conf
+echo "blacklist lp" >> /etc/modprobe.d/blacklist.conf
